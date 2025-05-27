@@ -1,0 +1,74 @@
+#include <iostream>
+#include <string>
+
+class Animal {
+protected:
+    int patas;
+    int cola;
+    bool mamifero;
+    std::string color;
+
+public:
+    
+    Animal(int p, int c, bool m, const std::string& col)
+        : patas(p), cola(c), mamifero(m), color(col) {}
+
+    
+    void mostrarCaracteristicas() const {
+        std::cout << "Patas: " << patas << ", Cola: " << cola
+                  << ", Mamífero: " << (mamifero ? "Sí" : "No")
+                  << ", Color: " << color << std::endl;
+    }
+};
+
+class Leon : public Animal {
+public:
+    Leon() : Animal(4, 1, true, "Amarillo") {}
+};
+
+class Perro : public Animal {
+public:
+    Perro() : Animal(4, 1, true, "Marrón") {}
+};
+
+class Elefante : public Animal {
+public:
+    Elefante() : Animal(4, 1, true, "Gris") {}
+};
+
+class Jirafa : public Animal {
+public:
+    Jirafa() : Animal(4, 1, true, "Amarillo con manchas") {}
+};
+
+class Gato : public Animal {
+public:
+    Gato() : Animal(4, 1, true, "Blanco") {}
+};
+
+int main() {
+    Leon leon;
+    Perro perro;
+    Elefante elefante;
+    Jirafa jirafa;
+    Gato gato;
+
+    std::cout << "Características del León:" << std::endl;
+    leon.mostrarCaracteristicas();
+
+    std::cout << "\nCaracterísticas del Perro:" << std::endl;
+    perro.mostrarCaracteristicas();
+
+    std::cout << "\nCaracterísticas del Elefante:" << std::endl;
+    elefante.mostrarCaracteristicas();
+
+    std::cout << "\nCaracterísticas de la Jirafa:" << std::endl;
+    jirafa.mostrarCaracteristicas();
+
+    std::cout << "\nCaracterísticas del Gato:" << std::endl;
+    gato.mostrarCaracteristicas();
+
+    return 0;
+}
+
+
