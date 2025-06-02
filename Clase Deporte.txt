@@ -1,0 +1,71 @@
+#include <iostream>
+#include <string>
+
+class Deporte {
+protected:
+    int jugadoresPorEquipo;
+    bool esDeEquipo;
+    std::string lugar;
+    std::string objetoPrincipal;
+
+public:
+    Deporte(int jugadores, bool equipo, const std::string& lugarPractica, const std::string& objeto)
+        : jugadoresPorEquipo(jugadores), esDeEquipo(equipo), lugar(lugarPractica), objetoPrincipal(objeto) {}
+
+    void mostrarCaracteristicas() const {
+        std::cout << "Jugadores por equipo: " << jugadoresPorEquipo
+                  << ", Es deporte de equipo: " << (esDeEquipo ? "Sí" : "No")
+                  << ", Lugar de práctica: " << lugar
+                  << ", Objeto principal: " << objetoPrincipal << std::endl;
+    }
+};
+
+class Futbol : public Deporte {
+public:
+    Futbol() : Deporte(11, true, "Campo de césped", "Balón") {}
+};
+
+class Baloncesto : public Deporte {
+public:
+    Baloncesto() : Deporte(5, true, "Cancha cubierta", "Balón") {}
+};
+
+class Tenis : public Deporte {
+public:
+    Tenis() : Deporte(1, false, "Cancha de tenis", "Raqueta") {}
+};
+
+class Natacion : public Deporte {
+public:
+    Natacion() : Deporte(1, false, "Piscina", "Gorro y gafas") {}
+};
+
+class Beisbol : public Deporte {
+public:
+    Beisbol() : Deporte(9, true, "Campo de béisbol", "Bate y pelota") {}
+};
+
+int main() {
+    Futbol futbol;
+    Baloncesto baloncesto;
+    Tenis tenis;
+    Natacion natacion;
+    Beisbol beisbol;
+
+    std::cout << "Características del Fútbol:" << std::endl;
+    futbol.mostrarCaracteristicas();
+
+    std::cout << "\nCaracterísticas del Baloncesto:" << std::endl;
+    baloncesto.mostrarCaracteristicas();
+
+    std::cout << "\nCaracterísticas del Tenis:" << std::endl;
+    tenis.mostrarCaracteristicas();
+
+    std::cout << "\nCaracterísticas de la Natación:" << std::endl;
+    natacion.mostrarCaracteristicas();
+
+    std::cout << "\nCaracterísticas del Béisbol:" << std::endl;
+    beisbol.mostrarCaracteristicas();
+
+    return 0;
+}
