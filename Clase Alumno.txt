@@ -1,0 +1,120 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <iomanip>
+
+using namespace std;
+
+struct Asignatura {
+    string nombreMateria;
+    float calificacion1;
+    float calificacion2;
+    float calificacion3;
+};
+
+
+struct Estudiante {
+    string nombreEstudiante;
+    vector<Asignatura> asignaturas;
+};
+
+
+float calcularPromedioAsignatura(const Asignatura& asignatura) {
+    return (asignatura.calificacion1 + asignatura.calificacion2 + asignatura.calificacion3) / 3.0f;
+}
+
+
+string obtenerEstadoAsignatura(float promedio) {
+    return (promedio >= 6.0f) ? "APROBADO" : "REPROBADO";
+}
+
+
+void generarReporte(const vector<Estudiante>& estudiantes) {
+    cout << "REPORTE DE CALIFICACIONES DE ASIGNATURAS" << endl;
+    cout << "ESTUDIANTE     ASIGNATURA     CALIFICACION FINAL    ESTADO" << endl;
+    
+    float promedioGeneralTotal = 0.0f;
+    int totalAsignaturasGeneral = 0;
+    
+    for (const auto& estudiante : estudiantes) {
+        float promedioEstudiante = 0.0f;
+        int asignaturasAprobadas = 0;
+        
+        for (const auto& asignatura : estudiante.asignaturas) {
+            float promedio = calcularPromedioAsignatura(asignatura);
+            string estado = obtenerEstadoAsignatura(promedio);
+            
+            cout << left << setw(15) << estudiante.nombreEstudiante
+                 << setw(20) << asignatura.nombreMateria
+                 << fixed << setprecision(2) << setw(10) << promedio
+                 << estado << endl;
+                 
+            promedioEstudiante += promedio;
+            
+            if (estado == "APROBADO") {
+                asignaturasAprobadas++;
+            }
+            
+                        cout << setw(15) << " ";
+        }
+        
+        promedioEstudiante /= estudiante.asignaturas.size();
+        totalAsignaturasGeneral += estudiante.asignaturas.size();
+        promedioGeneralTotal += promedioEstudiante;
+        
+        cout << "TOTAL ESTUDIANTE  " << estudiante.asignaturas.size() << " ASIGNATURAS    PROMEDIO: " 
+             << fixed << setprecision(2) << promedioEstudiante << "    "
+             << obtenerEstadoAsignatura(promedioEstudiante) << endl;
+    }
+    
+    if (!estudiantes.empty()) {
+        promedioGeneralTotal /= estudiantes.size();
+        cout << "TOTAL GENERAL  " << estudiantes.size() << " ESTUDIANTES    PROMEDIO GENERAL: " 
+             << fixed << setprecision(2) << promedioGeneralTotal << endl;
+    }
+}
+
+int main() {
+    vector<Estudiante> estudiantes;
+    char continuarIngreso;
+    
+    do {
+        Estudiante estudiante;
+        cout << "Ingrese el nombre del estudiante: ";
+        getline(cin, estudiante.nombreEstudiante);
+        
+        char otraAsignatura;
+        do {
+            Asignatura asignatura;
+            cout << "Ingrese el nombre de la asignatura: ";
+            getline(cin, asignatura.nombreMateria);
+            
+            cout << "Ingrese la calificacion 1: ";
+            cin >> asignatura.calificacion1;
+            
+            cout << "Ingrese la calificacion 2: ";
+            cin >> asignatura.calificacion2;
+            
+            cout << "Ingrese la calificacion 3: ";
+            cin >> asignatura.calificacion3;
+            
+            cin.ignore(); // Limpiar el buffer
+            
+            estudiante.asignaturas.push_back(asignatura);
+            
+            cout << "¿Desea agregar otra asignatura para este estudiante? (s/n): ";
+            cin >> otraAsignatura;
+            cin.ignore();
+        } while (tolower(otraAsignatura) == 's');
+        
+        estudiantes.push_back(estudiante);
+        
+        cout << "¿Desea agregar otro estudiante? (s/n): ";
+        cin >> continuarIngreso;
+        cin.ignore();
+    } while (tolower(continuarIngreso) == 's');
+    
+    generarReporte(estudiantes);
+    
+    return 0;
+}
