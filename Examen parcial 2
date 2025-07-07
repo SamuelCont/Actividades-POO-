@@ -1,0 +1,137 @@
+
+#include <cstdio>
+#include <cmath>
+#include <cstring>
+
+// Clase base
+class Figura {
+protected:
+    char nombre[20];
+public:
+    Figura(const char* n) {
+        strncpy(nombre, n, sizeof(nombre));
+    }
+
+    virtual void leerDatos() = 0;
+    virtual float calcularVolumen() = 0;
+
+    void imprimirVolumen() {
+        printf("Figura: %s\n", nombre);
+        printf("Volumen: %.2f\n", calcularVolumen());
+    }
+};
+
+// Clase Cubo
+class Cubo : public Figura {
+private:
+    float arista;
+public:
+    Cubo() : Figura("Cubo") {}
+    void leerDatos() {
+        printf("Ingrese la arista del cubo: ");
+        scanf("%f", &arista);
+    }
+    float calcularVolumen() {
+        return arista * arista * arista;
+    }
+};
+
+// Clase Cilindro
+class Cilindro : public Figura {
+private:
+    float radio, altura;
+public:
+    Cilindro() : Figura("Cilindro") {}
+    void leerDatos() {
+        printf("Ingrese el radio del cilindro: ");
+        scanf("%f", &radio);
+        printf("Ingrese la altura del cilindro: ");
+        scanf("%f", &altura);
+    }
+    float calcularVolumen() {
+        return 3.1416f * radio * radio * altura;
+    }
+};
+
+// Clase Cono
+class Cono : public Figura {
+private:
+    float radio, altura;
+public:
+    Cono() : Figura("Cono") {}
+    void leerDatos() {
+        printf("Ingrese el radio del cono: ");
+        scanf("%f", &radio);
+        printf("Ingrese la altura del cono: ");
+        scanf("%f", &altura);
+    }
+    float calcularVolumen() {
+        return (3.1416f * radio * radio * altura) / 3.0f;
+    }
+};
+
+// Clase Esfera
+class Esfera : public Figura {
+private:
+    float radio;
+public:
+    Esfera() : Figura("Esfera") {}
+    void leerDatos() {
+        printf("Ingrese el radio de la esfera: ");
+        scanf("%f", &radio);
+    }
+    float calcularVolumen() {
+        return (4.0f / 3.0f) * 3.1416f * radio * radio * radio;
+    }
+};
+
+// Programa principal SIN apuntadores
+int main() {
+    int opcion;
+
+    do {
+        printf("\n--- ÁREAS FIGURAS GEOMÉTRICAS ---\n");
+        printf("1. CUBO\n");
+        printf("2. CILINDRO\n");
+        printf("3. CONO\n");
+        printf("4. ESFERA\n");
+        printf("5. SALIR\n");
+        printf("ESCOGER OPCIÓN: ");
+        scanf("%d", &opcion);
+
+        switch (opcion) {
+            case 1: {
+                Cubo cubo;
+                cubo.leerDatos();
+                cubo.imprimirVolumen();
+                break;
+            }
+            case 2: {
+                Cilindro cilindro;
+                cilindro.leerDatos();
+                cilindro.imprimirVolumen();
+                break;
+            }
+            case 3: {
+                Cono cono;
+                cono.leerDatos();
+                cono.imprimirVolumen();
+                break;
+            }
+            case 4: {
+                Esfera esfera;
+                esfera.leerDatos();
+                esfera.imprimirVolumen();
+                break;
+            }
+            case 5:
+                printf("Programa finalizado.\n");
+                break;
+            default:
+                printf("Opción no válida.\n");
+        }
+
+    } while (opcion != 5);
+
+    return 0;
+}
